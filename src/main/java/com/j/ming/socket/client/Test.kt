@@ -1,16 +1,17 @@
 package com.j.ming.socket.client
 
+import com.j.ming.socket.model.DeviceInfo
 import java.net.InetAddress
 
 /**
  * Created by sunny on 18-3-27.
  */
 fun main(args: Array<String>) {
-//    Client.register(InetAddress.getLocalHost(), DeviceInfo("macAddress", "deviceName", "ipAddress"),
-//            registerCallback = {
-//                println("register: $it")
-//            })
-    Client.sendText(InetAddress.getLocalHost().hostAddress, "sadfsadf")
+    Client.register("127.0.0.1", DeviceInfo("macAddress", "deviceName", "ipAddress"),
+            registerCallback = {
+                println("register: $it")
+            })
+//    Client.sendText(InetAddress.getLocalHost().hostAddress, "sadfsadf")
 
 //    Client.sendFile("/home/sunny/阳光电影www.ygdy8.com.第三度嫌疑人.BD.720p.日语中字.mkv", InetAddress.getLocalHost().hostAddress, object : SocketUtil.SocketCallback{
 //        override fun onBegin(file: TransLocalFile) {

@@ -15,7 +15,7 @@ interface ClientSocketStrategy{
      * this method send a simple info to Server
      * to register this device to Group
      */
-    fun register(address: InetAddress, deviceInfo: DeviceInfo, port: Int, registerCallback: (success: Boolean) -> Unit = {})
+    fun register(ip: String, deviceInfo: DeviceInfo, port: Int, registerCallback: (success: Boolean) -> Unit = {})
 
 
     /**

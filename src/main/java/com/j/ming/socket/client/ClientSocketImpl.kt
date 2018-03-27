@@ -48,9 +48,9 @@ class ClientSocketImpl : ClientSocketStrategy {
         return result
     }
 
-    override fun register(address: InetAddress, deviceInfo: DeviceInfo, port: Int,
+    override fun register(ip: String, deviceInfo: DeviceInfo, port: Int,
                           registerCallback: (success: Boolean) -> Unit) {
-        SocketUtil(Socket(address.hostAddress, port)).eacyUse({
+        SocketUtil(Socket(ip, port)).eacyUse({
             writeInt(ProtocolCode.CODE_REGISTER)
             writeUTF(deviceInfo.toJson())
             flush()

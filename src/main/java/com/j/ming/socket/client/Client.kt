@@ -37,9 +37,9 @@ object Client : ClientStrategy {
         }
     }
 
-    override fun register(address: InetAddress, deviceInfo: DeviceInfo, port: Int, registerCallback: (success: Boolean) -> Unit) {
+    override fun register(ip: String, deviceInfo: DeviceInfo, port: Int, registerCallback: (success: Boolean) -> Unit) {
         try{
-            strategy.register(address, deviceInfo, port, registerCallback)
+            strategy.register(ip, deviceInfo, port, registerCallback)
         }catch (e: Exception){
             e.printStackTrace()
         }
