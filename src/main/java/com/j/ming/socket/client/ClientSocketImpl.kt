@@ -48,12 +48,11 @@ class ClientSocketImpl : ClientSocketStrategy {
         return result
     }
 
-    override fun register(ip: String, deviceInfo: DeviceInfo, port: Int,
+    override fun register(socket: Socket, deviceInfo: DeviceInfo,
                           registerCallback: (success: Boolean) -> Unit) {
-        SocketUtil(Socket(ip, port)).eacyUse({
+        SocketUtil(socket).eacyUse({
             writeInt(ProtocolCode.CODE_REGISTER)
             writeUTF(deviceInfo.toJson())
-            flush()
             Logger.i("receive: ${readInt()}")
             registerCallback(true)
         }, {

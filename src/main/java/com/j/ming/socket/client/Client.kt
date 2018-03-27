@@ -37,9 +37,11 @@ object Client : ClientStrategy {
         }
     }
 
-    override fun register(ip: String, deviceInfo: DeviceInfo, port: Int, registerCallback: (success: Boolean) -> Unit) {
+    override fun register(ip: String, deviceInfo: DeviceInfo, registerCallback: (success: Boolean) -> Unit) {
         try{
-            strategy.register(ip, deviceInfo, port, registerCallback)
+            Socket(ip, SocketConfig.FileListenPort)?.let {
+                strategy.register(it, deviceInfo, registerCallback)
+            }
         }catch (e: Exception){
             e.printStackTrace()
         }

@@ -15,7 +15,7 @@ interface ClientStrategy{
      * this method send a simple info to server
      * to register this device to Group
      */
-    fun register(ip: String, deviceInfo: DeviceInfo, port: Int = SocketConfig.FileListenPort,
+    fun register(ip: String, deviceInfo: DeviceInfo,
                  registerCallback: (success: Boolean) -> Unit = {})
 
     fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback)
