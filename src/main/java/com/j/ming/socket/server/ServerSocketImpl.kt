@@ -28,7 +28,8 @@ class ServerSocketImpl : ServerSocketStrategy {
                     val json = su.readUTF()
                     Logger.i("json: $json")
                     val deviceInfo = GsonUtil.json2Bean(json, DeviceInfo::class.java)
-                    deviceInfo.ipAddress = socket.inetAddress.toString()
+                    deviceInfo.ipAddress = socket.inetAddress.hostAddress
+                    println(deviceInfo.ipAddress)
                     deviceInfo.status = DeviceInfo.Status.CONNECTED
 
                     callback.onNewDeviceRegister(deviceInfo)

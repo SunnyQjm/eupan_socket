@@ -1,8 +1,6 @@
 package com.j.ming.socket.client
 
-import com.j.ming.socket.config.SocketConfig
 import java.net.InetAddress
-import java.net.Socket
 
 /**
  * Created by sunny on 18-3-27.
@@ -12,7 +10,7 @@ fun main(args: Array<String>) {
 //            registerCallback = {
 //                println("register: $it")
 //            })
-    Client.sendText(Socket(InetAddress.getLocalHost(), SocketConfig.FileListenPort), "sadfsadf")
+    Client.sendText(InetAddress.getLocalHost().hostAddress, "sadfsadf")
 
 //    Client.sendFile("/home/sunny/阳光电影www.ygdy8.com.第三度嫌疑人.BD.720p.日语中字.mkv", InetAddress.getLocalHost().hostAddress, object : SocketUtil.SocketCallback{
 //        override fun onBegin(file: TransLocalFile) {

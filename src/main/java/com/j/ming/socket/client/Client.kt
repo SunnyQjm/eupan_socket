@@ -13,9 +13,11 @@ import java.net.Socket
 object Client : ClientStrategy {
     private val strategy: ClientSocketStrategy = ClientSocketImpl()
 
-    override fun sendText(socket: Socket, info: String) {
+    override fun sendText(ip: String, info: String) {
         try {
-            strategy.sendText(socket, info)
+            Socket(ip, SocketConfig.FileListenPort).let {
+                strategy.sendText(it, info)
+            }
         } catch (e: Exception){
             e.printStackTrace()
         }

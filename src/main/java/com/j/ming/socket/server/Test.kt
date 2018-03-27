@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
             }
 
             override fun onReceiveSimpleText(inetAddress: InetAddress, message: String) {
-                Logger.i("onReceiveSimpleText: $message($inetAddress)")
+                Logger.i("onReceiveSimpleText: $message(${inetAddress.hostAddress})")
             }
         })
     }

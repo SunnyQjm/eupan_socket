@@ -29,5 +29,5 @@ interface ClientStrategy{
      * @throws IOException
      */
     @Throws(IOException::class)
-    fun sendText(socket: Socket, info: String)
+    fun sendText(ip: String, info: String)
 }
