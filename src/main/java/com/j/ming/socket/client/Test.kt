@@ -1,7 +1,6 @@
 package com.j.ming.socket.client
 
 import com.j.ming.socket.model.DeviceInfo
-import java.net.InetAddress
 
 /**
  * Created by sunny on 18-3-27.
