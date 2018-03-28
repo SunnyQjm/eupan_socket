@@ -4,6 +4,7 @@ import com.j.ming.socket.config.ProtocolCode
 import com.j.ming.socket.util.SocketUtil
 import com.j.ming.socket.model.DeviceInfo
 import com.j.ming.socket.model.TransLocalFile
+import com.j.ming.socket.util.GsonUtil
 import com.j.ming.socket.util.Logger
 import com.j.ming.socket.util.toBean
 import java.net.Socket
@@ -24,10 +25,10 @@ class ServerSocketImpl : ServerSocketStrategy {
             when (code) {
             //Client register
                 ProtocolCode.CODE_REGISTER -> {
-//                    val json = su.readUTF()
-//                    Logger.i("json: $json")
-//                    val deviceInfo = GsonUtil.json2Bean(json, DeviceInfo::class.java)
-                    val deviceInfo = DeviceInfo("", "", "")
+                    val json = su.readUTF()
+                    Logger.i("json: $json")
+                    val deviceInfo = GsonUtil.json2Bean(json, DeviceInfo::class.java)
+//                    val deviceInfo = DeviceInfo("", "", "")
                     deviceInfo.ipAddress = socket.inetAddress.hostAddress
                     println(deviceInfo.ipAddress)
                     deviceInfo.status = DeviceInfo.Status.CONNECTED

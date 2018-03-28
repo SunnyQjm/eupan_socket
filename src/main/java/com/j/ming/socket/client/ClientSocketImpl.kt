@@ -52,7 +52,7 @@ class ClientSocketImpl : ClientSocketStrategy {
                           registerCallback: (success: Boolean) -> Unit) {
         SocketUtil(socket).eacyUse({
             writeInt(ProtocolCode.CODE_REGISTER)
-//            writeUTF(deviceInfo.toJson())
+            writeUTF(deviceInfo.toJson())
             Logger.i("receive: ${readInt()}")
             registerCallback(true)
         }, {
