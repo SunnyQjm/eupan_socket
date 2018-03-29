@@ -10,36 +10,45 @@ import java.net.ServerSocket
 /**
  * Created by sunny on 17-11-17.
  */
-object Server : ServerStrategy {
-    private var listenPort = SocketConfig.FileListenPort
-    private var serverSocketStrategy: ServerSocketStrategy = ServerSocketImpl()
-    private var serverSocket: ServerSocket? = null
+object Server {
+    private val serverSocketMap = HashMap<Int, ServerSocket>()
     const val SAVE_PATH = ""
-    override fun startListen(callback: SocketUtil.SocketCallback) {
-        if(serverSocket == null || serverSocket?.isClosed == true){
-            serverSocket = ServerSocket(listenPort)
-        }
-        serverSocket?.let {
-            while(!it.isClosed){
-                try {
-                    Logger.i("--------------------accepting---------------------")
-                    val socket = it.accept()
-                    Logger.i("--------------------accept success!-------------------")
-                    /**
-                     * change to another thread to deal the request
-                     * This thread still comeback to listen the request from client
-                     */
-                    doAsync {
-                        serverSocketStrategy.service(socket, callback)
+    fun startListen(callback: SocketUtil.SocketCallback, listenPort: Int = SocketConfig.FileListenPort,
+                    serverSocketStrategy: ServerSocketStrategy = ServerSocketImpl()) {
+        serverSocketMap[listenPort]?.let {
+            if (it.isClosed)
+                return@let ServerSocket(listenPort)
+            return@let it
+        } ?: ServerSocket(listenPort)
+                .let {
+                    serverSocketMap[listenPort] = it
+                    while (!it.isClosed) {
+                        try {
+                            Logger.i("--------------------accepting---------------------")
+                            val socket = it.accept()
+                            Logger.i("--------------------accept success!-------------------")
+                            /**
+                             * change to another thread to deal the request
+                             * This thread still comeback to listen the request from client
+                             */
+                            doAsync {
+                                serverSocketStrategy.service(socket, callback)
+                            }
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
                     }
-                } catch (e: IOException) {
-                    e.printStackTrace()
                 }
-            }
+    }
+
+    fun stop(listenPort: Int = SocketConfig.FileListenPort) {
+        serverSocketMap[listenPort]?.close()
+    }
+
+    fun stopAll(){
+        serverSocketMap.forEach { _, v ->
+            v.close()
         }
     }
 
-    fun stop(){
-        serverSocket?.close()
-    }
 }

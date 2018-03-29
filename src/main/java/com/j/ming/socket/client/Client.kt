@@ -10,12 +10,12 @@ import java.net.Socket
 /**
  * Created by sunny on 17-11-17.
  */
-object Client : ClientStrategy {
+object Client {
     private val strategy: ClientSocketStrategy = ClientSocketImpl()
 
-    override fun sendText(ip: String, info: String) {
+    fun sendText(ip: String, info: String, port: Int = SocketConfig.SimpleTextListenPort) {
         try {
-            Socket(ip, SocketConfig.FileListenPort).let {
+            Socket(ip, port).let {
                 strategy.sendText(it, info)
             }
         } catch (e: Exception){
@@ -23,9 +23,9 @@ object Client : ClientStrategy {
         }
     }
 
-    override fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback) {
+    fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback, port: Int = SocketConfig.FileListenPort) {
         try {
-            val socket = Socket(ip, SocketConfig.FileListenPort)
+            val socket = Socket(ip, port)
             val f = File(path)
             if (!f.exists()) {
                 callback.onError(null, Exception("File not exist: ${f.absolutePath}"))
@@ -37,9 +37,10 @@ object Client : ClientStrategy {
         }
     }
 
-    override fun register(ip: String, deviceInfo: DeviceInfo, registerCallback: (success: Boolean) -> Unit) {
+    fun register(ip: String, deviceInfo: DeviceInfo, registerCallback: (success: Boolean) -> Unit,
+                 port: Int = SocketConfig.RegisterListenPort) {
         try{
-            Socket(ip, SocketConfig.FileListenPort)?.let {
+            Socket(ip, port).let {
                 strategy.register(it, deviceInfo, registerCallback)
             }
         }catch (e: Exception){

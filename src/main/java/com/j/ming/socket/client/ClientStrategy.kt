@@ -7,27 +7,27 @@ import java.io.IOException
 import java.net.InetAddress
 import java.net.Socket
 
-/**
- * Created by sunny on 17-11-17.
- */
-interface ClientStrategy{
-    /**
-     * this method send a simple info to server
-     * to register this device to Group
-     */
-    fun register(ip: String, deviceInfo: DeviceInfo,
-                 registerCallback: (success: Boolean) -> Unit = {})
-
-    fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback)
-
-
-    /**
-     * 通过Socket发送简单字符信息
-     *
-     * @param socket 操作的套接字对象
-     * @param info   要发送的信息
-     * @throws IOException
-     */
-    @Throws(IOException::class)
-    fun sendText(ip: String, info: String)
-}
+///**
+// * Created by sunny on 17-11-17.
+// */
+//interface ClientStrategy{
+//    /**
+//     * this method send a simple info to server
+//     * to register this device to Group
+//     */
+//    fun register(ip: String, deviceInfo: DeviceInfo,
+//                 registerCallback: (success: Boolean) -> Unit = {})
+//
+//    fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback)
+//
+//
+//    /**
+//     * 通过Socket发送简单字符信息
+//     *
+//     * @param socket 操作的套接字对象
+//     * @param info   要发送的信息
+//     * @throws IOException
+//     */
+//    @Throws(IOException::class)
+//    fun sendText(ip: String, info: String)
+//}

@@ -1,5 +1,6 @@
 package com.j.ming.socket.server
 
+import com.j.ming.socket.config.SocketConfig
 import com.j.ming.socket.model.DeviceInfo
 import com.j.ming.socket.util.SocketUtil
 import com.j.ming.socket.model.TransLocalFile
@@ -38,6 +39,33 @@ fun main(args: Array<String>) {
             }
         })
     }
+    doAsync {
+        Server.startListen(object : SocketUtil.SocketCallback {
+            override fun onBegin(file: TransLocalFile) {
+                Logger.i("begin: $file")
+            }
+
+            override fun onProgress(file: TransLocalFile, progressState: SocketUtil.ProgressState) {
+                Logger.i("onProgress: $progressState")
+            }
+
+            override fun onEnd(file: TransLocalFile) {
+                Logger.i("onEnd: $file")
+            }
+
+            override fun onError(file: TransLocalFile?, e: Throwable) {
+                Logger.i("onError: $e")
+            }
+
+            override fun onNewDeviceRegister(file: DeviceInfo) {
+                Logger.i("onNewDeviceRegister: $file")
+            }
+
+            override fun onReceiveSimpleText(inetAddress: InetAddress, message: String) {
+                Logger.i("onReceiveSimpleText: $message(${inetAddress.hostAddress})")
+            }
+        }, listenPort = SocketConfig.RegisterListenPort)
+    }
     Thread.sleep(10000)
-    Server.stop()
+    Server.stopAll()
 }
