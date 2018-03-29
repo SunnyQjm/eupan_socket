@@ -28,18 +28,18 @@ class ServerSocketImpl : ServerSocketStrategy {
                     val json = su.readUTF()
                     Logger.i("json: $json")
                     val deviceInfo = GsonUtil.json2Bean(json, DeviceInfo::class.java)
-//                    val deviceInfo = DeviceInfo("", "", "")
                     deviceInfo.ipAddress = socket.inetAddress.hostAddress
                     println(deviceInfo.ipAddress)
                     deviceInfo.status = DeviceInfo.Status.CONNECTED
-
                     callback.onNewDeviceRegister(deviceInfo)
+                    su.writeInt(-1)
                 }
 
                 ProtocolCode.REQUEST_SIMPLE_TEXT -> {
                     //将对方的IP写回，以便对方获取IP
                     callback.onReceiveSimpleText(socket.inetAddress, su.readUTF())
                     su.writeUTF(socket.inetAddress.hostAddress)
+                    su.writeInt(-1)
                 }
                 ProtocolCode.REQUEST_SINGLE_FILE -> {
                     val transLocalFile = su.readUTF().toBean(TransLocalFile::class.java)
@@ -53,7 +53,6 @@ class ServerSocketImpl : ServerSocketStrategy {
                     Logger.i("文件读取完毕")
                 }
             }
-            su.writeInt(-1)
             su.flush()
         } catch (e: Throwable) {
             callback.onError(null, e)

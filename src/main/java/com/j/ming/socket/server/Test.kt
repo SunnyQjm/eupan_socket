@@ -66,6 +66,6 @@ fun main(args: Array<String>) {
             }
         }, listenPort = SocketConfig.RegisterListenPort)
     }
-    Thread.sleep(10000)
-    Server.stopAll()
+//    Thread.sleep(10000)
+//    Server.stopAll()
 }

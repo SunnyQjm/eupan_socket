@@ -40,7 +40,8 @@ class ClientSocketImpl : ClientSocketStrategy {
             writeInt(ProtocolCode.REQUEST_SINGLE_FILE)
             writeUTF(transLocalFile.toJson())
             writeFile(transLocalFile, callback)
-            Logger.i("服务器返回来的消息为: ${readUTF()}")
+            //文件传输完毕之后关写一端
+            shutDownOutput()
             result = true
         }, { e ->
             callback.onError(transLocalFile, e)

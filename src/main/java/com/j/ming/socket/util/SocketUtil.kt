@@ -138,6 +138,14 @@ class SocketUtil(val socket: Socket) {
         callback?.onEnd(transLocalFile)
     }
 
+    fun shutDownOutput(){
+        socket.shutdownOutput()
+    }
+
+    fun shutDownInput(){
+        socket.shutdownInput()
+    }
+
     fun close() {
         out.close()
         input.close()
