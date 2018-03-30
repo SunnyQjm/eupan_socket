@@ -15,7 +15,7 @@ import java.net.Socket
  */
 class ServerSocketImpl : ServerSocketStrategy {
 
-    override fun service(socket: Socket, callback: SocketUtil.SocketCallback) {
+    override fun service(socket: Socket, callback: SocketUtil.SocketCallback, savePath: String) {
         Logger.i("service")
         var su: SocketUtil? = null
         try {
@@ -27,7 +27,7 @@ class ServerSocketImpl : ServerSocketStrategy {
                 ProtocolCode.CODE_REGISTER -> {
                     val json = su.readUTF()
                     Logger.i("json: $json")
-                    val deviceInfo = GsonUtil.json2Bean(json, DeviceInfo::class.java)
+                    val deviceInfo = json.toBean(DeviceInfo::class.java)
                     deviceInfo.ipAddress = socket.inetAddress.hostAddress
                     println(deviceInfo.ipAddress)
                     deviceInfo.status = DeviceInfo.Status.CONNECTED
@@ -44,7 +44,7 @@ class ServerSocketImpl : ServerSocketStrategy {
                 ProtocolCode.REQUEST_SINGLE_FILE -> {
                     val transLocalFile = su.readUTF().toBean(TransLocalFile::class.java)
                     transLocalFile.fileTAG = TransLocalFile.TAG_RECEIVE
-                    val path = "${Server.SAVE_PATH}${transLocalFile.name}"
+                    val path = "$savePath${transLocalFile.name}"
                     transLocalFile.path = path
                     Logger.i("传输的文件名：" + transLocalFile.name)
                     Logger.i("文件的大小为：" + transLocalFile.size)

@@ -12,9 +12,8 @@ import java.net.ServerSocket
  */
 object Server {
     private val serverSocketMap = HashMap<Int, ServerSocket>()
-    const val SAVE_PATH = ""
     fun startListen(callback: SocketUtil.SocketCallback, listenPort: Int = SocketConfig.FileListenPort,
-                    serverSocketStrategy: ServerSocketStrategy = ServerSocketImpl()) {
+                    serverSocketStrategy: ServerSocketStrategy = ServerSocketImpl(), savePath: String = "") {
         serverSocketMap[listenPort]?.let {
             if (it.isClosed)
                 return@let ServerSocket(listenPort)
@@ -32,7 +31,7 @@ object Server {
                              * This thread still comeback to listen the request from client
                              */
                             doAsync {
-                                serverSocketStrategy.service(socket, callback)
+                                serverSocketStrategy.service(socket, callback, savePath = savePath)
                             }
                         } catch (e: IOException) {
                             e.printStackTrace()

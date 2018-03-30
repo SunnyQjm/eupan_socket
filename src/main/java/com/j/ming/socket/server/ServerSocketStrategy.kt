@@ -7,5 +7,5 @@ import java.net.Socket
  * Created by sunny on 17-11-17.
  */
 interface ServerSocketStrategy {
-    fun service(socket: Socket, callback: SocketUtil.SocketCallback)
+    fun service(socket: Socket, callback: SocketUtil.SocketCallback, savePath: String = "")
 }

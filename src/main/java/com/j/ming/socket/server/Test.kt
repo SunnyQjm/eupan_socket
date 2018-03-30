@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
             override fun onReceiveSimpleText(inetAddress: InetAddress, message: String) {
                 Logger.i("onReceiveSimpleText: $message(${inetAddress.hostAddress})")
             }
-        })
+        }, savePath = "/home/sunny/Videos/")
     }
     doAsync {
         Server.startListen(object : SocketUtil.SocketCallback {
