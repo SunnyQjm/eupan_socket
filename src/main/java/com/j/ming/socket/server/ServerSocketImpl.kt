@@ -52,6 +52,12 @@ class ServerSocketImpl : ServerSocketStrategy {
                     su.readFile(transLocalFile, callback)
                     Logger.i("文件读取完毕")
                 }
+                ProtocolCode.REQUEST_CODE_CONTROL -> {
+                    su.readInt().let {
+                        println("receive command: $it")
+                        callback.onReceiveControlCommand(su.readInt())
+                    }
+                }
             }
             su.flush()
         } catch (e: Throwable) {

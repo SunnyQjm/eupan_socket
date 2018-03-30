@@ -9,4 +9,5 @@ object ProtocolCode{
     @JvmStatic val REQUEST_DELETE_FORWARD_ITEM = 2
     @JvmStatic val REQUEST_SIMPLE_TEXT = 3        //收到简单字符串
     @JvmStatic val REQUEST_SINGLE_FILE = 4        //传送单个文件
+    @JvmStatic val REQUEST_CODE_CONTROL = 5       //控制命令
 }

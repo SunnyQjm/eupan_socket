@@ -17,6 +17,17 @@ import java.net.Socket
  */
 class ClientSocketImpl : ClientSocketStrategy {
 
+    override fun sendControlCommand(socket: Socket, controlCode: Int, sendControlCommandCallback: (success: Boolean) -> Unit) {
+        SocketUtil(socket).eacyUse({
+            writeInt(ProtocolCode.REQUEST_CODE_CONTROL)
+            writeInt(controlCode)
+            shutDownOutput()
+            sendControlCommandCallback(true)
+        }, {
+            sendControlCommandCallback(false)
+        })
+    }
+
 
     override fun sendText(socket: Socket, info: String) {
         SocketUtil(socket).eacyUse({

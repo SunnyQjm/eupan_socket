@@ -18,7 +18,7 @@ object Client {
             Socket(ip, port).let {
                 strategy.sendText(it, info)
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -40,15 +40,26 @@ object Client {
 
     fun register(ip: String, deviceInfo: DeviceInfo, registerCallback: (success: Boolean) -> Unit,
                  port: Int = SocketConfig.RegisterListenPort) {
-        try{
+        try {
             Socket(ip, port).let {
                 strategy.register(it, deviceInfo, registerCallback)
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
+
+    fun sendControlCommand(ip: String, command: Int, port: Int = SocketConfig.FileListenPort,
+                           sendControlCommandCallback: (success: Boolean) -> Unit = {}) {
+        try {
+            Socket(ip, port).let {
+                strategy.sendControlCommand(it, command, sendControlCommandCallback)
+            }
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
 
 
 }

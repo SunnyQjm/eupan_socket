@@ -36,4 +36,6 @@ interface ClientSocketStrategy{
      * @param sendName          发送过去的文件名
      */
     fun sendSingleFile(socket: Socket, file: File, callback: SocketUtil.SocketCallback, sendName: String? = null): Boolean
+
+    fun sendControlCommand(socket: Socket, controlCode: Int, sendControlCommandCallback: (success: Boolean) -> Unit = {})
 }

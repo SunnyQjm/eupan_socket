@@ -167,13 +167,15 @@ class SocketUtil(val socket: Socket) {
 
         fun onReceiveSimpleText(inetAddress: InetAddress, message: String){}
 
-        fun onBegin(file: TransLocalFile)
+        fun onReceiveControlCommand(controlCode: Int){}
 
-        fun onProgress(file: TransLocalFile, progressState: ProgressState)
+        fun onBegin(file: TransLocalFile){}
 
-        fun onEnd(file: TransLocalFile)
+        fun onProgress(file: TransLocalFile, progressState: ProgressState){}
 
-        fun onError(file: TransLocalFile?, e: Throwable)
+        fun onEnd(file: TransLocalFile){}
+
+        fun onError(file: TransLocalFile?, e: Throwable){}
 
     }
 }
