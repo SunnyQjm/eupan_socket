@@ -39,6 +39,8 @@ fun main(args: Array<String>) {
         }, savePath = "/home/sunny/Videos/")
     }
     Thread.sleep(1000)
+    Server.stop()
+    Thread.sleep(1000)
     doAsync {
         Server.startListen(object : SocketUtil.SocketCallback {
             override fun onBegin(file: TransLocalFile) {

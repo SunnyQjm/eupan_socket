@@ -17,7 +17,7 @@ object Server {
 
     fun startListen(callback: SocketUtil.SocketCallback, listenPort: Int = SocketConfig.FileListenPort,
                     serverSocketStrategy: ServerSocketStrategy = ServerSocketImpl(), savePath: String = "") {
-        serverSocketMap[listenPort]?.let {
+        (serverSocketMap[listenPort]?.let {
             if (it.isClosed) {
                 return@let ServerSocket(listenPort)
             } else {  //之前已经在这个端口监听了，只是替换回调对象
@@ -25,8 +25,9 @@ object Server {
                 savePathMap[listenPort] = savePath
                 return
             }
-        } ?: ServerSocket(listenPort)
+        } ?: ServerSocket(listenPort))
                 .let {
+                    println("begin")
                     serverSocketMap[listenPort] = it
                     callbackMap[listenPort] = callback
                     savePathMap[listenPort] = savePath
@@ -40,8 +41,8 @@ object Server {
                              * This thread still comeback to listen the request from client
                              */
                             doAsync {
-                                callbackMap[listenPort]?.let { cb->
-                                    savePathMap[listenPort]?.let{ sp->
+                                callbackMap[listenPort]?.let { cb ->
+                                    savePathMap[listenPort]?.let { sp ->
                                         serverSocketStrategy.service(socket, cb, savePath = sp)
                                     }
                                 }
