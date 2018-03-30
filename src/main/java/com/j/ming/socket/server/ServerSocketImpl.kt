@@ -55,7 +55,7 @@ class ServerSocketImpl : ServerSocketStrategy {
                 ProtocolCode.REQUEST_CODE_CONTROL -> {
                     su.readInt().let {
                         println("receive command: $it")
-                        callback.onReceiveControlCommand(su.readInt())
+                        callback.onReceiveControlCommand(it)
                     }
                 }
             }
