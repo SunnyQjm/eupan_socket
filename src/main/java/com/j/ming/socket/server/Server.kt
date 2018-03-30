@@ -12,15 +12,24 @@ import java.net.ServerSocket
  */
 object Server {
     private val serverSocketMap = HashMap<Int, ServerSocket>()
+    private val callbackMap = HashMap<Int, SocketUtil.SocketCallback>()
+    private val savePathMap = HashMap<Int, String>()
+
     fun startListen(callback: SocketUtil.SocketCallback, listenPort: Int = SocketConfig.FileListenPort,
                     serverSocketStrategy: ServerSocketStrategy = ServerSocketImpl(), savePath: String = "") {
         serverSocketMap[listenPort]?.let {
-            if (it.isClosed)
+            if (it.isClosed) {
                 return@let ServerSocket(listenPort)
-            return@let it
+            } else {  //之前已经在这个端口监听了，只是替换回调对象
+                callbackMap[listenPort] = callback
+                savePathMap[listenPort] = savePath
+                return
+            }
         } ?: ServerSocket(listenPort)
                 .let {
                     serverSocketMap[listenPort] = it
+                    callbackMap[listenPort] = callback
+                    savePathMap[listenPort] = savePath
                     while (!it.isClosed) {
                         try {
                             Logger.i("--------------------accepting---------------------")
@@ -31,7 +40,11 @@ object Server {
                              * This thread still comeback to listen the request from client
                              */
                             doAsync {
-                                serverSocketStrategy.service(socket, callback, savePath = savePath)
+                                callbackMap[listenPort]?.let { cb->
+                                    savePathMap[listenPort]?.let{ sp->
+                                        serverSocketStrategy.service(socket, cb, savePath = sp)
+                                    }
+                                }
                             }
                         } catch (e: IOException) {
                             e.printStackTrace()
@@ -44,7 +57,7 @@ object Server {
         serverSocketMap[listenPort]?.close()
     }
 
-    fun stopAll(){
+    fun stopAll() {
         serverSocketMap.forEach { _, v ->
             v.close()
         }

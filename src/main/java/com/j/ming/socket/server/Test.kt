@@ -1,6 +1,5 @@
 package com.j.ming.socket.server
 
-import com.j.ming.socket.config.SocketConfig
 import com.j.ming.socket.model.DeviceInfo
 import com.j.ming.socket.util.SocketUtil
 import com.j.ming.socket.model.TransLocalFile
@@ -39,6 +38,7 @@ fun main(args: Array<String>) {
             }
         }, savePath = "/home/sunny/Videos/")
     }
+    Thread.sleep(1000)
     doAsync {
         Server.startListen(object : SocketUtil.SocketCallback {
             override fun onBegin(file: TransLocalFile) {
@@ -46,7 +46,7 @@ fun main(args: Array<String>) {
             }
 
             override fun onProgress(file: TransLocalFile, progressState: SocketUtil.ProgressState) {
-                Logger.i("onProgress: $progressState")
+                Logger.i("onProgress: $progressState-----")
             }
 
             override fun onEnd(file: TransLocalFile) {
@@ -64,7 +64,7 @@ fun main(args: Array<String>) {
             override fun onReceiveSimpleText(inetAddress: InetAddress, message: String) {
                 Logger.i("onReceiveSimpleText: $message(${inetAddress.hostAddress})")
             }
-        }, listenPort = SocketConfig.RegisterListenPort)
+        }, savePath = "/home/sunny/Pictures/")
     }
 //    Thread.sleep(10000)
 //    Server.stopAll()
