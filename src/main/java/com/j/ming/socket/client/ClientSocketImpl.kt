@@ -27,10 +27,10 @@ class ClientSocketImpl : ClientSocketStrategy {
     }
 
 
-    override fun sendSingleFile(socket: Socket, file: File, callback: SocketUtil.SocketCallback): Boolean {
+    override fun sendSingleFile(socket: Socket, file: File, callback: SocketUtil.SocketCallback, sendName: String?): Boolean {
         var result = false
         val transLocalFile = TransLocalFile.Builder()
-                .name(file.name)
+                .name(sendName?:file.name)
                 .path(file.path)
                 .size(file.length())
                 .fileTAG(TransLocalFile.TAG_SEND)

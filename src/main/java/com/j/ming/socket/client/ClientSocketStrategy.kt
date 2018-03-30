@@ -32,6 +32,8 @@ interface ClientSocketStrategy{
      * This method indicate to send a Single File to other device by socket
      * @param socket            the socket connect between your device and the destination
      * @param file              the file you want to send
+     * @param callback
+     * @param sendName          发送过去的文件名
      */
-    fun sendSingleFile(socket: Socket, file: File, callback: SocketUtil.SocketCallback): Boolean
+    fun sendSingleFile(socket: Socket, file: File, callback: SocketUtil.SocketCallback, sendName: String? = null): Boolean
 }

@@ -32,5 +32,5 @@ fun main(args: Array<String>) {
             println("onError: $e")
         }
 
-    })
+    }, sendName = "lalla.mkv")
 }

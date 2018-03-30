@@ -23,7 +23,8 @@ object Client {
         }
     }
 
-    fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback, port: Int = SocketConfig.FileListenPort) {
+    fun sendFile(path: String, ip: String, callback: SocketUtil.SocketCallback, port: Int = SocketConfig.FileListenPort,
+                 sendName: String? = null) {
         try {
             val socket = Socket(ip, port)
             val f = File(path)
@@ -31,7 +32,7 @@ object Client {
                 callback.onError(null, Exception("File not exist: ${f.absolutePath}"))
                 return
             }
-            strategy.sendSingleFile(socket, f, callback)
+            strategy.sendSingleFile(socket, f, callback, sendName)
         } catch (e: Exception) {
             e.printStackTrace()
         }
