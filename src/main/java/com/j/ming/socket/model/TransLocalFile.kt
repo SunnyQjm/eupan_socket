@@ -5,7 +5,7 @@ package com.j.ming.socket.model
  * Created by Sunny on 2017/5/13 0013.
  */
 
-open class TransLocalFile private constructor(builder: Builder) {
+open class TransLocalFile constructor(builder: Builder) {
     var md5: String? = null
     val name: String?
     val size: Long
